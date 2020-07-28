@@ -1,0 +1,45 @@
+# 为所有resources和引用的名称添加前缀
+namePrefix: testing-
+# 为所有resources和引用的名称添加后缀
+nameSuffix: -v1
+
+# 若resources中设置了namespace，则本配置会覆盖resources中的namespace
+namespace: testing
+
+# 为所有resources添加annotation
+commonLabels:
+  app: testing-demo-app
+   
+# 修改镜像名称与Tag，而无需使用patches
+images:
+- name: demo-app
+  newName: testing/demo-app
+  newTag: v1
+
+# 修改副本数，而无需使用patches(优先级高于patches)
+#replicas:
+#- name: demo-app
+#  count: 10
+
+# 需要被创建的resources，支持指定URL
+resources:
+- ../../base
+
+# 在resources中添加或覆盖字段
+patches:
+- container-resources.yaml
+- replicas.yaml
+
+configMapGenerator:
+- name: java-env-file-vars
+  behavior: merge
+  envs:
+  - config/application-env.txt
+
+secretGenerator:
+- name: env-file-secret
+  behavior: replace
+  envs:
+  - secret/env.txt
+  type: Opaque
+

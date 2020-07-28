@@ -1,0 +1,3 @@
+NAME=staging-application-env
+ENV_FILE=application-env.txt
+BEHAVIOR=merge

@@ -1,0 +1,52 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+commonLabels:
+  base: common
+
+# 为所有resources添加annotation
+commonAnnotations:
+  author: yinlin
+
+configMapGenerator:
+- name: java-props
+  files:
+  - config/application.properties
+  - config/more.properties
+- name: java-env-file-vars
+  envs:
+  - config/application-env.txt
+- name: java-env-vars
+  literals:
+  - JAVA_HOME=/opt/java/jdk-1.8.0
+  - JAVA_TOOL_OPTIONS=-agentlib:hprof
+- name: demo-nginx.conf
+  files:
+  - config/nginx.conf
+
+
+secretGenerator:
+- name: demo-app-tls
+  namespace: default
+  files:
+  - secret/tls.crt
+  - secret/tls.key
+  type: "kubernetes.io/tls"
+- name: env-file-secret
+  envs:
+  - secret/env.txt
+  type: Opaque
+  options:
+    annotations:
+      app_config: "true"
+    labels:
+      app.kubernetes.io/name: "demo-app"
+
+# 控制生成ConfigMap和Secret的选项
+generatorOptions:
+  labels:
+    kustomize.generated.resources: demo
+  annotations:
+    kustomize.generated.resource: demo
+  disableNameSuffixHash: true
