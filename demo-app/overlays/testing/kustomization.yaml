@@ -14,7 +14,7 @@ commonLabels:
 images:
 - name: demo-app
   newName: nginx
-  newTag: 1.17
+  newTag: "1.17"
 
 # 修改副本数，而无需使用patches(优先级高于patches)
 #replicas:
