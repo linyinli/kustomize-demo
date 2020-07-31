@@ -9,8 +9,8 @@ spec:
       - name: demo-app
         resources:
           limits:
-            cpu: "3"
-            memory: "3Gi"
+            cpu: "300m"
+            memory: "300Mi"
           requests:
-            cpu: "3"
-            memory: "3Gi"
+            cpu: "300m"
+            memory: "300Mi"
