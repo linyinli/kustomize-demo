@@ -1,1 +1,3 @@
-# kustomize-demo
+# Kustomize Demo
+
+A kustomize demo.
